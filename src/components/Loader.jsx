@@ -76,6 +76,7 @@ export default function Loader({ onEnter }) {
       opacity: entered ? 0 : 1,
       transition: 'opacity 0.7s ease',
       pointerEvents: entered ? 'none' : 'all',
+      background:'skyblue'
     }}>
       {/* Lego brick grid background */}
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>

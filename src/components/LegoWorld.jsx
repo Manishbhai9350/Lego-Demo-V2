@@ -240,6 +240,8 @@
 //     {pos:[ 6, 0,-13], color:'#D81B60', floors:5,  w:2.8, d:2.8},
 //   ],[])
 
+  
+
 //   return (
 //     <group>
 //       {/* Ground */}
@@ -410,7 +412,7 @@ function LegoTrees({ positions }) {
   )
 }
 
-function StreetLamp({ position }) {
+function StreetLamp({ position, rotation }) {
   return (
     <group position={position}>
       <mesh castShadow>
@@ -609,8 +611,8 @@ export default function LegoWorld() {
 
       <LegoTrees positions={treePos} />
 
-      {[[-2,0,-10],[2,0,-10],[-2,0,-3],[2,0,-3],[-2,0,4],[2,0,4],[-2,0,11],[2,0,11]].map(([x,y,z],i)=>(
-        <StreetLamp key={i} position={[x,y,z]} />
+      {[[-2,0,-2],[2,0,-2],[-2,0,-3],[2,0,-3],[-2,0,4],[2,0,4],[-2,0,11],[2,0,11]].map(([x,y,z],i)=>(
+        <StreetLamp key={i} rotation={[0,i%2 == 0 ? Math.PI / 2 : 0, 0]} position={[x,y,z]} />
       ))}
 
       <Fountain position={[0,0,-5]} />

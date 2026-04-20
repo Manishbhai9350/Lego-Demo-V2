@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Sky, Environment } from '@react-three/drei'
 import { Suspense, useState } from 'react'
 import LegoWorld from './components/LegoWorld'
+import LegoWorld2 from './components/LegoWorld2'
 import LegoCharacter from './components/LegoCharacter'
 import Loader from './components/Loader'
 import { CHARACTERS } from './data'
@@ -12,6 +13,8 @@ function Lighting() {
     <>
       {/* Bright ambient — fills shadows nicely */}
       <ambientLight intensity={0.7} color="#fff8e8" />
+
+      <directionalLight position={[10, 20, 10]} intensity={1.5} />
 
       {/* Main sun — sharp + warm */}
       <directionalLight
@@ -85,13 +88,16 @@ export default function App() {
         padding:'9px 22px', borderRadius:30, letterSpacing:0.4,
         whiteSpace:'nowrap',
         opacity: entered ? 1 : 0, transition:'opacity 0.8s 0.5s',
+        display:'flex',
+        flexWrap:'wrap',
+        justifyContent:'center'
       }}>
         🖱 Drag to rotate &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; Click character to inspect
       </div>
 
       <Canvas
         shadows
-        camera={{ position:[0, 10, 20], fov:52, near:0.1, far:300 }}
+        camera={{ position: [0,0, 10], fov: innerWidth >= 900 ? 50 : 75 }}
         style={{ background:'#87CEEB' }}
         gl={{
           antialias: true,
@@ -112,7 +118,7 @@ export default function App() {
         <Lighting />
 
         <Suspense fallback={null}>
-          <LegoWorld />
+          <LegoWorld2 />
           {CHARACTERS.map(char => (
             <LegoCharacter key={char.id} char={char} />
           ))}
@@ -120,13 +126,15 @@ export default function App() {
 
         <SceneReset />
 
+
         <OrbitControls
           enablePan={false}
-          minDistance={7}
-          maxDistance={38}
-          maxPolarAngle={Math.PI / 2.08}
+          minDistance={innerWidth >= 900 ? 15 : 8 }
+          maxDistance={35}
+          maxPolarAngle={Math.PI / 2.1}
           enableDamping
           dampingFactor={0.08}
+          target={[0,2.5,0]}
           makeDefault
         />
       </Canvas>
